@@ -5,8 +5,8 @@
         <group>
             <file>file:/Users/Kevin/repos/ME433/HW6/HW6.X/main.c</file>
             <file>file:/Users/Kevin/repos/ME433/HW6/HW6.X/hw6_func.h</file>
-            <file>file:/Users/Kevin/repos/ME433/HW6/HW6.X/i2c_master_noint.c</file>
             <file>file:/Users/Kevin/repos/ME433/HW6/HW6.X/hw6_func.c</file>
+            <file>file:/Users/Kevin/repos/ME433/HW6/HW6.X/i2c_master_noint.c</file>
             <file>file:/Users/Kevin/repos/ME433/HW6/HW6.X/i2c_master_noint.h</file>
         </group>
     </open-files>

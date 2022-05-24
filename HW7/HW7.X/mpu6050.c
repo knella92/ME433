@@ -1,6 +1,6 @@
 #include "i2c_master_noint.h"
 #include "mpu6050.h"
-#include "uart1.h"
+#include "hello.h"
 
 // Source file for mpu6050.h.
 // Enables use of InvenSense MPU-6050 IMU
@@ -23,6 +23,7 @@ void init_mpu6050(void) {
     //  bits [2:0]: configure digital low pass filter
     //  bits [5:3]: configure external sync (leave disabled)
     //  bits [7:6]: reserved
+    //write_byte_I2C1(IMU_ADDR,CONFIG,)
     
     // 3. Initialize ACCEL_CONFIG (accelerometer) register
     //  bits [2:0]: reserved

@@ -100,6 +100,4 @@ void burst_read_I2C1(uint8_t dev_addr,
 void write_byte_I2C1(uint8_t dev_addr,
                      uint8_t reg_addr,
                      uint8_t data);
-
-void 
 #endif

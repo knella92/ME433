@@ -1,9 +1,32 @@
-#include "uart1.h"
+#include "hello.h"
 #include <xc.h>
         
-#define PIC32_SYS_FREQ 48000000ul
+#define PIC32_SYS_FREQ 48000000
 #define PIC32_DESIRED_BAUD 230400
 
+
+void UART1_Startup() {
+  // disable interrupts
+  U1RXRbits.U1RXR = 0b0001; //B6
+  RPB7Rbits.RPB7R = 0b0001; //U1TX is B7
+
+  // turn on UART1 without an interrupt
+  U1MODEbits.BRGH = 0; // set baud to PIC32_DESIRED_BAUD
+  U1BRG = ((PIC32_SYS_FREQ / PIC32_DESIRED_BAUD) / 16) - 1;
+
+  // 8 bit, no parity bit, and 1 stop bit (8N1 setup)
+  U1MODEbits.PDSEL = 0;
+  U1MODEbits.STSEL = 0;
+
+  // configure TX & RX pins as output & input pins
+  U1STAbits.UTXEN = 1;
+  U1STAbits.URXEN = 1;
+
+  // enable the uart
+  U1MODEbits.ON = 1;
+
+
+}
 // Read from UART1
 // block other functions until you get a '\r' or '\n'
 // send the pointer to your char array and the number of elements in the array
@@ -42,24 +65,3 @@ void WriteUART1(const char * string) {
 }
 
 
-void UART1_Startup() {
-  // disable interrupts
-  __builtin_disable_interrupts();
-
-  // turn on UART1 without an interrupt
-  U1MODEbits.BRGH = 0; // set baud to PIC32_DESIRED_BAUD
-  U1BRG = ((PIC32_SYS_FREQ / PIC32_DESIRED_BAUD) / 16) - 1;
-
-  // 8 bit, no parity bit, and 1 stop bit (8N1 setup)
-  U1MODEbits.PDSEL = 0;
-  U1MODEbits.STSEL = 0;
-
-  // configure TX & RX pins as output & input pins
-  U1STAbits.UTXEN = 1;
-  U1STAbits.URXEN = 1;
-
-  // enable the uart
-  U1MODEbits.ON = 1;
-
-  __builtin_enable_interrupts();
-}
