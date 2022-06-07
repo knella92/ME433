@@ -1,5 +1,5 @@
-#ifndef __HELLO_H__
-#define __HELLO_H__
+#ifndef __UART1_H__
+#define __UART1_H__
 
 
 void UART1_Startup(void);

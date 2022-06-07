@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c i2c_master_noint.c mpu6050.c hw6_func.c hello.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c i2c_master_noint.c mpu6050.c hw6_func.c UART1.c comp_filter.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/i2c_master_noint.o ${OBJECTDIR}/mpu6050.o ${OBJECTDIR}/hw6_func.o ${OBJECTDIR}/hello.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/i2c_master_noint.o.d ${OBJECTDIR}/mpu6050.o.d ${OBJECTDIR}/hw6_func.o.d ${OBJECTDIR}/hello.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/i2c_master_noint.o ${OBJECTDIR}/mpu6050.o ${OBJECTDIR}/hw6_func.o ${OBJECTDIR}/UART1.o ${OBJECTDIR}/comp_filter.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/i2c_master_noint.o.d ${OBJECTDIR}/mpu6050.o.d ${OBJECTDIR}/hw6_func.o.d ${OBJECTDIR}/UART1.o.d ${OBJECTDIR}/comp_filter.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/i2c_master_noint.o ${OBJECTDIR}/mpu6050.o ${OBJECTDIR}/hw6_func.o ${OBJECTDIR}/hello.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/i2c_master_noint.o ${OBJECTDIR}/mpu6050.o ${OBJECTDIR}/hw6_func.o ${OBJECTDIR}/UART1.o ${OBJECTDIR}/comp_filter.o
 
 # Source Files
-SOURCEFILES=main.c i2c_master_noint.c mpu6050.c hw6_func.c hello.c
+SOURCEFILES=main.c i2c_master_noint.c mpu6050.c hw6_func.c UART1.c comp_filter.c
 
 
 
@@ -131,11 +131,17 @@ ${OBJECTDIR}/hw6_func.o: hw6_func.c  .generated_files/flags/default/ce921f417aa5
 	@${RM} ${OBJECTDIR}/hw6_func.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fno-common -MP -MMD -MF "${OBJECTDIR}/hw6_func.o.d" -o ${OBJECTDIR}/hw6_func.o hw6_func.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/hello.o: hello.c  .generated_files/flags/default/8e421fd8067f08d59f6327ce9160562151de200 .generated_files/flags/default/15078ce8f5a6ad03035624f12995f439edad8cad
+${OBJECTDIR}/UART1.o: UART1.c  .generated_files/flags/default/44de096dfa025f946a0aac8bbf5446262ee3d7c3 .generated_files/flags/default/15078ce8f5a6ad03035624f12995f439edad8cad
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/hello.o.d 
-	@${RM} ${OBJECTDIR}/hello.o 
-	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fno-common -MP -MMD -MF "${OBJECTDIR}/hello.o.d" -o ${OBJECTDIR}/hello.o hello.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
+	@${RM} ${OBJECTDIR}/UART1.o.d 
+	@${RM} ${OBJECTDIR}/UART1.o 
+	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fno-common -MP -MMD -MF "${OBJECTDIR}/UART1.o.d" -o ${OBJECTDIR}/UART1.o UART1.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
+	
+${OBJECTDIR}/comp_filter.o: comp_filter.c  .generated_files/flags/default/1b1c414fa5ac3fc879b31e16f25c3a542d16d945 .generated_files/flags/default/15078ce8f5a6ad03035624f12995f439edad8cad
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/comp_filter.o.d 
+	@${RM} ${OBJECTDIR}/comp_filter.o 
+	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fno-common -MP -MMD -MF "${OBJECTDIR}/comp_filter.o.d" -o ${OBJECTDIR}/comp_filter.o comp_filter.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
 else
 ${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/da1ad3795ee863b8f6ebb829497a488edd1c53e6 .generated_files/flags/default/15078ce8f5a6ad03035624f12995f439edad8cad
@@ -162,11 +168,17 @@ ${OBJECTDIR}/hw6_func.o: hw6_func.c  .generated_files/flags/default/c5b90d421e50
 	@${RM} ${OBJECTDIR}/hw6_func.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fno-common -MP -MMD -MF "${OBJECTDIR}/hw6_func.o.d" -o ${OBJECTDIR}/hw6_func.o hw6_func.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/hello.o: hello.c  .generated_files/flags/default/3595cba62998c3ca351ae50fe2634bf846161c0a .generated_files/flags/default/15078ce8f5a6ad03035624f12995f439edad8cad
+${OBJECTDIR}/UART1.o: UART1.c  .generated_files/flags/default/696c6d29ef4f3223313fa1c5436fa84f6f209249 .generated_files/flags/default/15078ce8f5a6ad03035624f12995f439edad8cad
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/hello.o.d 
-	@${RM} ${OBJECTDIR}/hello.o 
-	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fno-common -MP -MMD -MF "${OBJECTDIR}/hello.o.d" -o ${OBJECTDIR}/hello.o hello.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
+	@${RM} ${OBJECTDIR}/UART1.o.d 
+	@${RM} ${OBJECTDIR}/UART1.o 
+	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fno-common -MP -MMD -MF "${OBJECTDIR}/UART1.o.d" -o ${OBJECTDIR}/UART1.o UART1.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
+	
+${OBJECTDIR}/comp_filter.o: comp_filter.c  .generated_files/flags/default/ad7c125ff1274f1b5f8af62f3c4e529c94f0311e .generated_files/flags/default/15078ce8f5a6ad03035624f12995f439edad8cad
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/comp_filter.o.d 
+	@${RM} ${OBJECTDIR}/comp_filter.o 
+	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -fno-common -MP -MMD -MF "${OBJECTDIR}/comp_filter.o.d" -o ${OBJECTDIR}/comp_filter.o comp_filter.c    -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
 endif
 

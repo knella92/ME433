@@ -1,4 +1,6 @@
 #ifndef MPU6050__H__
+#include <stdint.h>
+
 #define MPU6050__H__
 // Header file for mpu6050.c.
 // Enables use of InvenSense MPU-6050 IMU

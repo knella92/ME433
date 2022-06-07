@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include "i2c_master_noint.h"
 #include "mpu6050.h"
-#include "hello.h"
+#include "UART1.h"
+#include "comp_filter.h"
 
 // DEVCFG0
 #pragma config DEBUG = OFF // disable debugging
@@ -70,6 +71,11 @@ int main() {
     
     // init the imu
     init_mpu6050();
+
+    float pitch = 0;
+    float * p = &pitch;
+    float theta_xl = 0;
+    float phi_xl = 0;
     
     char m_in[100]; // char array for uart data coming in
     char m_out[200]; // char array for uart data going out
@@ -89,35 +95,40 @@ int main() {
     }
     
     char IMU_buf[IMU_ARRAY_LEN]; // raw 8 bit array for imu data
+    uint8_t imu_buf[IMU_ARRAY_LEN];
 
     while (1) {
         blink();
-        
         ReadUART1(m_in,100); // wait for a newline
         // don't actually have to use what is in m
         
         // collect data
-        for (i=0; i<NUM_DATA_PNTS; i++){
-            _CP0_SET_COUNT(0);
-            // read IMU
-            burst_read_mpu6050(IMU_buf);
-            ax[i] = conv_xXL(IMU_buf);
-            ay[i] = conv_yXL(IMU_buf);
-            az[i] = conv_zXL(IMU_buf);
-            gx[i] = conv_xG(IMU_buf);
-            gy[i] = conv_yG(IMU_buf);
-            gz[i] = conv_zG(IMU_buf);
-            temp[i] = conv_temp(IMU_buf);
+//        for (i=0; i<NUM_DATA_PNTS; i++){
+//            _CP0_SET_COUNT(0);
+//            // read IMU
+//            burst_read_mpu6050(IMU_buf);
+//            ax[i] = conv_xXL(IMU_buf);
+//            ay[i] = conv_yXL(IMU_buf);
+//            az[i] = conv_zXL(IMU_buf);
+//            gx[i] = conv_xG(IMU_buf);
+//            gy[i] = conv_yG(IMU_buf);
+//            gz[i] = conv_zG(IMU_buf);
+//            temp[i] = conv_temp(IMU_buf);
+//            
+//            while(_CP0_GET_COUNT()<24000000/2/100){}
+//        }
+//        
+//        // print data
+//        for (i=0; i<NUM_DATA_PNTS; i++){
+//            sprintf(m_out,"%d %f %f %f %f %f %f %f\r\n",NUM_DATA_PNTS-i,ax[i],ay[i],az[i],gx[i],gy[i],gz[i],temp[i]);
+//            WriteUART1(m_out);
+//        }
+        _CP0_SET_COUNT(0);
+        burst_read_mpu6050(imu_buf);
+        comp_filt(imu_buf, p);
+        while(_CP0_GET_COUNT()<COUNT){}
+        
             
-            while(_CP0_GET_COUNT()<24000000/2/100){}
-        }
-        
-        // print data
-        for (i=0; i<NUM_DATA_PNTS; i++){
-            sprintf(m_out,"%d %f %f %f %f %f %f %f\r\n",NUM_DATA_PNTS-i,ax[i],ay[i],az[i],gx[i],gy[i],gz[i],temp[i]);
-            WriteUART1(m_out);
-        }
-        
     }
 }
 
