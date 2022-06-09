@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/Kevin/repos/ME433/HW9/H9.X/ssd1306.h</file>
+            <file>file:/Users/Kevin/repos/ME433/HW9/H9.X/font.c</file>
             <file>file:/Users/Kevin/repos/ME433/HW9/H9.X/ws2812b.c</file>
+            <file>file:/Users/Kevin/repos/ME433/HW9/H9.X/ssd1306.c</file>
+            <file>file:/Users/Kevin/repos/ME433/HW9/H9.X/i2c_master_noint.c</file>
             <file>file:/Users/Kevin/repos/ME433/HW9/H9.X/ws2812b.h</file>
+            <file>file:/Users/Kevin/repos/ME433/HW9/H9.X/font.h</file>
         </group>
     </open-files>
 </project-private>
