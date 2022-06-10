@@ -1,10 +1,10 @@
-#include<xc.h>           // processor SFR definitions
-#include<sys/attribs.h>  // __ISR macro
+#include <xc.h>           // processor SFR definitions
+#include <sys/attribs.h>  // __ISR macro
 #include <stdio.h>
 #include "i2c_master_noint.h"
 #include "mpu6050.h"
 #include "UART1.h"
-#include "comp_filter.h"
+#include <math.h>
 
 // DEVCFG0
 #pragma config DEBUG = OFF // disable debugging
@@ -36,6 +36,9 @@
 #pragma config USERID = 0 // some 16bit userid, doesn't matter what
 #pragma config PMDL1WAY = OFF // allow multiple reconfigurations
 #pragma config IOL1WAY = OFF // allow multiple reconfigurations
+
+#define DT 0.01
+#define A 0.5
 
 
 
@@ -73,7 +76,6 @@ int main() {
     init_mpu6050();
 
     float pitch = 0;
-    float * p = &pitch;
     float theta_xl = 0;
     float phi_xl = 0;
     
@@ -81,7 +83,7 @@ int main() {
     char m_out[200]; // char array for uart data going out
     int i;
     #define NUM_DATA_PNTS 300 // how many data points to collect at 100Hz
-    float ax[NUM_DATA_PNTS], ay[NUM_DATA_PNTS], az[NUM_DATA_PNTS], gx[NUM_DATA_PNTS], gy[NUM_DATA_PNTS], gz[NUM_DATA_PNTS], temp[NUM_DATA_PNTS];
+    float ax[NUM_DATA_PNTS], ay[NUM_DATA_PNTS], az[NUM_DATA_PNTS], gx[NUM_DATA_PNTS], gy[NUM_DATA_PNTS], gz[NUM_DATA_PNTS], p[NUM_DATA_PNTS], temp[NUM_DATA_PNTS];
     
     sprintf(m_out,"MPU-6050 WHO_AM_I: %X\r\n",whoami());
     WriteUART1(m_out);
@@ -103,30 +105,33 @@ int main() {
         // don't actually have to use what is in m
         
         // collect data
-//        for (i=0; i<NUM_DATA_PNTS; i++){
-//            _CP0_SET_COUNT(0);
-//            // read IMU
-//            burst_read_mpu6050(IMU_buf);
-//            ax[i] = conv_xXL(IMU_buf);
-//            ay[i] = conv_yXL(IMU_buf);
-//            az[i] = conv_zXL(IMU_buf);
-//            gx[i] = conv_xG(IMU_buf);
-//            gy[i] = conv_yG(IMU_buf);
-//            gz[i] = conv_zG(IMU_buf);
-//            temp[i] = conv_temp(IMU_buf);
-//            
-//            while(_CP0_GET_COUNT()<24000000/2/100){}
-//        }
-//        
-//        // print data
-//        for (i=0; i<NUM_DATA_PNTS; i++){
-//            sprintf(m_out,"%d %f %f %f %f %f %f %f\r\n",NUM_DATA_PNTS-i,ax[i],ay[i],az[i],gx[i],gy[i],gz[i],temp[i]);
-//            WriteUART1(m_out);
-//        }
-        _CP0_SET_COUNT(0);
-        burst_read_mpu6050(imu_buf);
-        comp_filt(imu_buf, p);
-        while(_CP0_GET_COUNT()<COUNT){}
+        for (i=0; i<NUM_DATA_PNTS; i++){
+            _CP0_SET_COUNT(0);
+            // read IMU
+            burst_read_mpu6050(IMU_buf);
+            ax[i] = conv_xXL(IMU_buf);
+            ay[i] = conv_yXL(IMU_buf);
+            az[i] = conv_zXL(IMU_buf);
+            gx[i] = conv_xG(IMU_buf);
+            gy[i] = conv_yG(IMU_buf);
+            gz[i] = conv_zG(IMU_buf);
+            temp[i] = conv_temp(IMU_buf);
+            
+            theta_xl = atan2f(ax[i],az[i]);
+            phi_xl = atan2f(gx[i],gy[i]);
+            pitch += gx[i]*DT;
+            pitch = A*theta_xl + (1-A)* pitch;
+            p[i] = pitch;
+            
+            
+            while(_CP0_GET_COUNT()<24000000/2/100){}
+        }
+        
+        // print data
+        for (i=0; i<NUM_DATA_PNTS; i++){
+            sprintf(m_out,"%d %f %f %f %f %f %f %f %f\r\n",NUM_DATA_PNTS-i,ax[i],ay[i],az[i],gx[i],gy[i],gz[i],p[i],temp[i]);
+            WriteUART1(m_out);
+        }
         
             
     }

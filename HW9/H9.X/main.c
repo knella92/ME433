@@ -62,9 +62,9 @@ int main() {
 //    TRISBbits.TRISB4 = 1;
 //    LATAbits.LATA4 = 0;
     
-    i2c_master_setup();
+    //i2c_master_setup();
     ws2812b_setup();
-    ssd1306_setup();
+    //ssd1306_setup();
     
     __builtin_enable_interrupts();
     

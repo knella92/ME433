@@ -16,6 +16,7 @@ az = []
 gx = []
 gy = []
 gz = []
+p = []
 temp = []
 print('Requesting data collection...')
 ser.write(b'\n')
@@ -24,7 +25,7 @@ while read_samples > 1:
     data_text = str(data_read,'utf-8') # turn the bytes to a string
     data = [float(i) for i in data_text.split()] # turn the string into a list of floats
 
-    if(len(data)==8):
+    if(len(data)==9):
         read_samples = int(data[0]) # keep reading until this becomes 1
         ax.append(data[1])
         ay.append(data[2])
@@ -32,10 +33,18 @@ while read_samples > 1:
         gx.append(data[4])
         gy.append(data[5])
         gz.append(data[6])
-        temp.append(data[7])
+        p.append(data[7])
+        temp.append(data[8])
 print('Data collection complete')
 # plot it
 import matplotlib.pyplot as plt 
+
+t = range(len(p)) # time array
+plt.plot(t,p,'r*-')
+plt.ylabel('Pitch')
+plt.xlabel('sample')
+plt.show()
+
 t = range(len(ax)) # time array
 plt.plot(t,ax,'r*-',t,ay,'b*-',t,az,'k*-')
 plt.ylabel('G value')
